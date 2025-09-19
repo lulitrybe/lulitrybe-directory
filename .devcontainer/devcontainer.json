@@ -82,7 +82,8 @@
                 "SharepointEmbedded.ms-sharepoint-embedded-vscode-extension",
                 "adamwojcikit.pnp-powershell-extension",
                 "doppler.doppler-vscode",
-                "tailscale.vscode-tailscale"
+                "tailscale.vscode-tailscale",
+                "msoffice.microsoft-office-add-in-debugger"
             ]
         }
     },
