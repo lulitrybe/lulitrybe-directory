@@ -1,0 +1,44 @@
+
+        {
+            "path": "/media/home/ubuntu/devhome/home/.config"
+        }
+    ],
+    "settings": {}
+}
+NODE_SERVER_PATH=/media/ubuntu/devhome/home//servers
+WORKSPACE_PATH=/media/ubuntu/devhome/home//containers
+PROJECT_ROOT_PATH=/media/ubuntu/devhome/home/
+CONFIG_DIR=/media/ubuntu/devhome/home/.config
+DEVCONTAINER_WORKSPACE_PATH=/run/media/ubuntu/btrfs/workspaces/mosgarage-home/.devcontainer/.vscode/workspace
+CMAKE_PATH=/media/ubuntu/devhome/home/.config/cmake
+DOCKER_VOLUME_STORAGE=/home/ubuntu/projects/.devcontainer/volumes
+
+# LOCALHOST_ADMIN_CONFIG
+GIT_WORKSPACE_PATH=/run/media/ubuntu/btrfs/workspaces/
+GITHUB_PROJECT_URL=https: //github.com/ubuntu/workspaces.git
+DEVCONTAINER_WORKSPACE_PATH=/home/ubuntu/projects/.devcontainer/.vscode/workspace/projects.code-workspace
+DOCKER_VOLUME_STORAGE=
+REGISTRY_PROXY_REMOTEURL="https://registry-1.docker.io"
+ECAMPUSLEARNING_LOCALHOST_PATH=/home/ubuntu/projects/ecampuslearning.localhost
+DOTNET_PATH=/home/ubuntu/projects/.config/dotnet
+DOTNET_SDK_VERSION=9.0.200
+
+# LOCALHOST_ADMIN_CONFIG
+GIT_SERVER_PATH=/home/ubuntu/gitserver
+CMAKE_SOURCE_DIRECTORY=/home/ubuntu/projects/.config/cmake
+CONFIG_DIR=./config/
+LOCAL_ADDR=https: //workspaces.localhost:8444
+PROXY=http: //localhost:9099
+
+# GIT / LOCALHOST / PASSWORD
+AUTH_METHOD=TOKEN
+GIT_USER=ubuntu
+GIT_USER_PWD =""
+CA=/tmp/tls.crt
+
+# DOCKER CONFIG
+
+#PORTAINER INFO
+ACME_EMAIL=ubuntu@outlook.com
+PORTAINER_TRAEFIK_URL=workspaces.ecampuslearning.com
+

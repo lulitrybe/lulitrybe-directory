@@ -1,0 +1,51 @@
+language: python
+
+# Default linux jobs
+os: linux
+sudo: required
+dist: trusty
+
+cache:
+  directories:
+    - $HOME/test
+    - $HOME/.tox
+    - $HOME/qemu
+
+env:
+  global:
+    - QEMU_PREFIX=$PWD/tests
+    - QEMU_FILE=.qemu.yml
+    - QEMU_GROUP=wheel
+    - QEMU_GID=1000
+    - QEMU_UID=1000
+    - DOCKER_COMPOSE_FILE='tests/.bin/docker-compose.yml'
+  matrix:
+    - TEST="yes" COVER="yes" LOCAL="no"  PIP="no"  HUB="no"
+    - TEST="no"  COVER="no"  LOCAL="yes" PIP="no"  HUB="no"
+    - TEST="no"  COVER="no"  LOCAL="yes" PIP="yes" HUB="no"
+    - TEST="no"  COVER="no"  LOCAL="yes" PIP="no"  HUB="yes"
+
+
+before_install:
+  - make before_install tox
+
+install:
+  - make requirements install
+
+before_script:
+  - make before_script
+
+script:
+  - make script
+
+after_script:
+  - make after_script
+  
+  
+after_success:
+  - make after_success
+
+# don't notify me when things fail
+notifications:
+  email: false
+

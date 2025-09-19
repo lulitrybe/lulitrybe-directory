@@ -1,0 +1,95 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            // Task to build the entire NopCommerce solution
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/NopCommerce.sln",
+                "/property:Configuration=Debug"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                // Make this the default build task (Ctrl+Shift+B or Cmd+Shift+B)
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Builds the NopCommerce.sln solution in Debug configuration."
+        },
+        {
+            // Task to build the solution in Release configuration
+            "label": "build-release",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/NopCommerce.sln",
+                "/property:Configuration=Release"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": "build",
+            "detail": "Builds the NopCommerce.sln solution in Release configuration."
+        },
+        {
+            // Task to run Nop.Web with hot reload/watch (Recommended for Development)
+            "label": "watch-run Nop.Web",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "${workspaceFolder}/bin/Debug/net9.0/Nop.Web.dll"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/bin/Debug/net9.0"
+            },
+            "problemMatcher": "$msCompile", // Use msCompile to catch build errors during watch
+            "detail": "Runs Nop.Web with dotnet watch for hot reload from compiled DLL."
+        },
+        {
+            // Task to simply run the Nop.Web project (without watch)
+            "label": "run Nop.Web",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "${workspaceFolder}/bin/Debug/net9.0/Nop.Web.dll"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/bin/Debug/net9.0"
+            },
+            "problemMatcher": "$msCompile",
+            "detail": "Runs the Nop.Web project from compiled DLL."
+        },
+        {
+            // Task to clean the solution (remove bin/obj folders)
+            "label": "clean",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "clean",
+                "${workspaceFolder}/src/NopCommerce.sln",
+                "/property:Configuration=Debug"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": "build",
+            "detail": "Cleans the build artifacts for the solution (Debug config)."
+        },
+        {
+            // Task to restore NuGet packages for the solution
+            "label": "restore",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "restore",
+                "${workspaceFolder}/src/NopCommerce.sln"
+            ],
+            "problemMatcher": "$msCompile",
+            "detail": "Restores NuGet packages for the entire solution."
+        }
+    ]
+}

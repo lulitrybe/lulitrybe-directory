@@ -1,0 +1,13 @@
+{
+    "cmake.sourceDirectory": "/media/officialmofabs/5943d3e3-0afe-4989-aef3-5433b5c5cd72/home/.config/cmake/Source",
+    "azureFunctions.projectSubpath": "Microsoft-Teams-Samples/samples/m365-actions-preview/nodejs/api",
+    "files.exclude": {
+        "obj": true,
+        "bin": true
+    },
+    "azureFunctions.deploySubpath": "Microsoft-Teams-Samples/samples/m365-actions-preview/nodejs/api",
+    "azureFunctions.postDeployTask": "npm install (functions)",
+    "azureFunctions.projectLanguage": "JavaScript",
+    "azureFunctions.projectRuntime": "~4",
+    "azureFunctions.preDeployTask": "npm prune (functions)"
+}

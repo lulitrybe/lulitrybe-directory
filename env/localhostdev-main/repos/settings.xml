@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HDE>
+  <SETTINGS>
+    <SETTING name="ArePackagesBrowsable">
+      <VALUE>False</VALUE>
+    </SETTING>
+    <SETTING name="AutoBackup">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="AutoBackupMinutes">
+      <VALUE>5</VALUE>
+    </SETTING>
+    <SETTING name="AutoReloadDocuments">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="CheckVersionOnStartup">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="DocumentAskOnFirstSave">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="LearnIsDefaultTab">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="LinkSnappingAreaSize">
+      <VALUE>25</VALUE>
+    </SETTING>
+    <SETTING name="LinkSnappingAreaSizeSmall">
+      <VALUE>16</VALUE>
+    </SETTING>
+    <SETTING name="MouseDragStartArea">
+      <VALUE>4</VALUE>
+    </SETTING>
+    <SETTING name="MouseWheelZooms">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="NewDocumentIfNoneLoaded">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="NodeBrowserEnableAdvanced">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="NodeBrowserEnableExperimental">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="NodeBrowserEnableExternal">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="NodeBrowserEnableIntelligentFiltering">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="NodeBrowserEnablePinChoices">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="NodeShowAssignmentIcon">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="NodeShowWarningIfExperimental">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="RecorderAutoOpen">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="RecorderFPS">
+      <VALUE>25</VALUE>
+    </SETTING>
+    <SETTING name="RecorderQuality">
+      <VALUE>10</VALUE>
+    </SETTING>
+    <SETTING name="RuntimeAutoJumpToError">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="RuntimePauseOnError">
+      <VALUE>False</VALUE>
+    </SETTING>
+    <SETTING name="ShowHelpOnStartup">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="ShowOrigin">
+      <VALUE>False</VALUE>
+    </SETTING>
+    <SETTING name="Stylesheet">
+      <VALUE>light.css</VALUE>
+    </SETTING>
+    <SETTING name="SymbolBrowserSize">
+      <VALUE>560 x 600</VALUE>
+    </SETTING>
+    <SETTING name="ThoroughHotswap">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="TooltipClassic">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="TooltipScaling">
+      <VALUE>100</VALUE>
+    </SETTING>
+    <SETTING name="TooltipShowAdvancedTimings">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="TooltipShowDocumentation">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="TooltipShowLocalID">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="TooltipShowObjects">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="TooltipShowOperation">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="TooltipShowSymbolSource">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="TooltipShowTimings">
+      <VALUE>True</VALUE>
+    </SETTING>
+    <SETTING name="TooltipStdDelayInMilliSeconds">
+      <VALUE>250</VALUE>
+    </SETTING>
+  </SETTINGS>
+</HDE>

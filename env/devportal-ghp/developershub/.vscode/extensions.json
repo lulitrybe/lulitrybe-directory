@@ -1,0 +1,37 @@
+{
+    // Extensions recommended for NopCommerce development
+    "recommendations": [
+        // C# Development
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.vscode-dotnet-runtime",
+
+        // Web Development
+        "ms-vscode.vscode-typescript-next",
+        "bradlc.vscode-tailwindcss",
+        "formulahendry.auto-rename-tag",
+        "christian-kohler.path-intellisense",
+
+        // Database
+        "ms-mssql.mssql",
+
+        // Git & Version Control
+        "eamodio.gitlens",
+        "github.vscode-github-actions",
+
+        // General Productivity
+        "ms-vscode.powershell",
+        "redhat.vscode-xml",
+        "ms-vscode.hexeditor",
+        "streetsidesoftware.code-spell-checker",
+
+        // Container Development
+        "ms-vscode-remote.remote-containers",
+        "ms-azuretools.vscode-docker"
+    ],
+
+    // Extensions that should not be recommended
+    "unwantedRecommendations": [
+        "ms-dotnettools.vscode-dotnet-pack"
+    ]
+}

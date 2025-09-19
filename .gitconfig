@@ -1,0 +1,166 @@
+[user]
+	name = Moses Fabiyi
+	email = officialmofabs@outlook.com
+[core]
+	editor = code --wait
+	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+[sendemail]
+	smtpencryption = tls
+	smtpserver = smtp.gmail.com
+	smtpuser = officialmofabs@outlook.com
+	smtppass = password
+	smtpserverport = 587
+	to = git@ecampuslearning.com
+[web]
+	browser = google-chrome
+[rerere]
+	enabled = 1
+	autoupdate = 1
+[user]
+	name = officialmofabs
+	email = officialmofabs@outlook.com
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[init]
+	defaultBranch = master
+[core]
+	editor = code --wait
+[credential]
+	helper = 
+	helper = /usr/local/bin/git-credential-manager
+	credentialStore = gpg
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[safe]
+        directory = /media/developer/0d968e32-0b1b-41bd-998d-7d5f0df53c42/cccerith-directory
+        directory = /media/officialmofabs/5943d3e3-0afe-4989-aef3-5433b5c5cd721/home
+        directory = /media/officialmofabs/5943d3e3-0afe-4989-aef3-5433b5c5cd721/home/.config
+        directory = /media/officialmofabs/5943d3e3-0afe-4989-aef3-5433b5c5cd721/home/.config/shared-workspace-development/gitfiles
+        directory = /home/officialmofabs/.mosgarage
+        directory = /home/officialmofabs/.devcontainer
+        directory = /home/officialmofabs/.ssh
+        directory = /home/officialmofabs/project
+        directory = /srv/git
+        directory = /media/officialmofabs/btrfs1
+        directory = /media/officialmofabs/btrfs1/.config
+        directory = /media/home/officialmofabs/homedev
+        directory = /media/officialmofabs/5943d3e3-0afe-4989-aef3-5433b5c5cd721/home
+	    directory = /home/officialmofabs/dev-git/daytona/daytona-installer
+[alias]
+	s = status
+	sb = status -s -b
+	#############
+	sa = stash apply
+	sc = stash clear
+	sd = stash drop
+	sl = stash list
+	sp = stash pop
+	ss = stash save
+	#############
+	d = diff
+	dc = diff --cached
+	dk = diff --check
+	dck = diff --cached --check
+	#############
+	c = commit
+	ca = commit -a
+	cm = commit -m
+	cam = commit -am
+	cd = commit --amend
+	cad = commit -a --amend
+	#############
+	a = add .
+	#############
+	ap = apply
+	as = apply --stat
+	ac = apply --check
+	#############
+	l = log --oneline
+	lg = log --oneline --graph --decorate
+	#############
+	o = checkout
+	ob = checkout -b
+	#############
+	b = branch
+	ba = branch -a
+	bd = branch -d
+	br = branch -r
+	#############
+	f = fetch
+	fo = fetch origin
+	#############
+	fp = format-patch
+	#############
+	fk = fsck
+	#############
+	m = merge
+	#############
+	pr = prune -v
+	#############
+	ps = push
+	pl = pull
+	pb = pull --rebase
+	psf = push -f
+	psu = push -u
+	plu = pull -u
+	pso = push origin
+	plo = pull origin
+	pbo = pull --rebase origin
+	psfo = push -f origin
+	psuo = push -u origin
+	pluo = pull -u origin
+	#############
+	rb = rebase
+	#############
+	re = reset
+	rh = reset HEAD
+	reh = reset --hard
+	rem = reset --mixed
+	res = reset --soft
+	rehh = reset --hard HEAD
+	remh = reset --mixed HEAD
+	resh = reset --soft HEAD
+	#############
+	r = remote
+	ra = remote add
+	rm = remote rm
+	rv = remote -v
+	rp = remote prune
+	rs = remote show
+	rso = remote show origin
+	rpo = remote prune origin
+	#############
+	w = show
+	#############
+	meldon = config diff.external /home/ecampuslearning/.meld.py
+	meldof = config --remove-section diff
+	#############
+	human = name-rev --name-only --refs=refs/heads/*
+[color]
+	ui = true
+[color "branch"]
+	current = yellow bold
+	local = green bold
+	remote = cyan bold
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[color "status"]
+	added = green bold
+	changed = yellow bold
+	untracked = red bold
+[github]
+	user = officialmofabs
+	token = token

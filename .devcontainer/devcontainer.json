@@ -1,0 +1,112 @@
+{
+    "name": "cccerith-directory",
+    "image": "mcr.microsoft.com/dotnet/sdk:9.0",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/devcontainers/features/github-cli:1": {
+            "version": "2"
+        },
+        "ghcr.io/devcontainers/features/powershell:1": {
+            "version": "latest"
+        },
+        "ghcr.io/azure/azure-dev/azd:0": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/common-utils:2": {},
+        "ghcr.io/devcontainers/features/dotnet:2": {
+            "version": "none",
+            "dotnetRuntimeVersions": "9.0",
+            "aspNetCoreRuntimeVersions": "9.0"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.vscode-node-azure-pack",
+                "GitHub.copilot",
+                "GitHub.vscode-github-actions",
+                "ms-dotnettools.csdevkit",
+                "temilaj.asp-net-core-vs-code-extension-pack",
+                "vsls-contrib.gitdoc",
+                "GitHub.codespaces",
+                "bierner.markdown-preview-github-styles",
+                "Pod212.vscode-github-projects",
+                "bierner.github-markdown-preview",
+                "shd101wyy.markdown-preview-enhanced",
+                "docsmsft.docs-markdown",
+                "csholmq.excel-to-markdown-table",
+                "doggy8088.git-extension-pack",
+                "GitHub.vscode-pull-request-github",
+                "vscode-icons-team.vscode-icons",
+                "ms-vscode-remote.remote-containers",
+                "microsoft-IsvExpTools.powerplatform-vscode",
+                "cweijan.vscode-excel",
+                "madewithcardsio.adaptivecardsstudiobeta",
+                "ms-azuretools.vscode-containers",
+                "yzane.markdown-pdf",
+                "yzhang.markdown-all-in-one",
+                "CS50.markdown50",
+                "jebbs.markdown-extended",
+                "redhat.vscode-yaml",
+                "docsmsft.docs-yaml",
+                "daiwata.yaml-preview",
+                "DanielThielking.aws-cloudformation-yaml",
+                "GolovinDaniil.yaml-go-to-definition",
+                "ms-kubernetes-tools.vscode-kubernetes-tools",
+                "GitHub.remotehub",
+                "ms-azuretools.vscode-azure-github-copilot",
+                "vinirossa.vscode-gitandgithub-pack",
+                "niudai.remote-github",
+                "grzegorzjudas.vscode-gitbuild",
+                "LeuisKen.github-explorer",
+                "NickCernis.github-cli-ui",
+                "vscjava.migrate-java-to-azure",
+                "RuslanRystsov.github-status",
+                "chdsbd.github-code-owners",
+                "brandonfowler.github-releases",
+                "blackgirlbytes.deploy-to-github-pages",
+                "Frankie.github-blogger",
+                "ArthurSudbrackIbarra.grc",
+                "ledkvu.github-codesearch",
+                "lzm0x219.vscode-markdown-github",
+                "devantler.github-extension-pack",
+                "ms-vscode-remote.vscode-remote-extensionpack",
+                "ms-vscode-remote.remote-ssh-edit",
+                "ms-vscode.remote-explorer",
+                "Mavenshu.remote-manager",
+                "cartpauj.remote-file-browser",
+                "ms-azuretools.vscode-azure-functions-remote-web",
+                "juhyeonni.vsc-remote-development-pack",
+                "SynapseVSCode.vscode-synapse-remote",
+                "m365pnp.viva-connections-toolkit",
+                "SharepointEmbedded.ms-sharepoint-embedded-vscode-extension",
+                "adamwojcikit.pnp-powershell-extension",
+                "doppler.doppler-vscode",
+                "tailscale.vscode-tailscale"
+            ]
+        }
+    },
+    "forwardPorts": [
+        8080,
+        8081
+    ],
+    "postCreateCommand": "dotnet new install Aspire.ProjectTemplates && cd ./SampleApp && dotnet restore",
+    "hostRequirements": {
+        "memory": "8gb",
+        "cpus": 4
+    },
+    "remoteEnv": {
+        "DOTNET_MULTILEVEL_LOOKUP": "0",
+        "TARGET": "net9.0"
+    },
+    "portsAttributes": {
+        "8080": {
+            "label": "Webr API",
+            "onAutoForward": "notify"
+        },
+        "8081": {
+            "label": "Front End",
+            "onAutoForward": "notify"
+        }
+    }
+}

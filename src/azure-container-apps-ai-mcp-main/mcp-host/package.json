@@ -1,0 +1,44 @@
+{
+  "name": "azure-container-apps-ai-mcp-host",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts"
+  },
+  "keywords": [
+    "modelcontextprotocol",
+    "mcp",
+    "mcp-host",
+    "mcp-client",
+    "azure",
+    "container",
+    "streamable",
+    "http",
+    "sse"
+  ],
+  "author": "Wassim Chegham <github@wassim.dev>",
+  "license": "MIT",
+  "description": "An MCP host application that interacts with the MCP server and the LLM provider. The host instanciates an LLM provider and provides a terminal interface for the user to interact with the agent.",
+  "dependencies": {
+    "@azure/identity": "^4.9.1",
+    "@modelcontextprotocol/sdk": "^1.10.2",
+    "chalk": "^5.4.1",
+    "debug": "^4.4.0",
+    "dotenv": "^16.5.0",
+    "openai": "^4.96.0",
+    "type": "^2.7.3",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "@types/node": "^20.11.24",
+    "tsx": "^4.19.3",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

@@ -1,0 +1,442 @@
+#!/bin/bash
+
+# Function to display help
+show_help() {
+  cat << EOF
+Clone Script - Manage NopCommerce plugin repositories
+
+USAGE:
+  clone [OPTIONS] <repo-name>
+  clone [OPTIONS] --site <site-name>
+  clone --remove [OPTIONS] <repo-name>
+  clone --remove --site <site-name>
+
+OPTIONS:
+  -h, --help      Show this help message
+  -v, --verbose   Enable verbose output
+  -rm, --remove   Remove repository instead of cloning
+  -s, --site      Clone/remove all repositories for a specific site
+
+EXAMPLES:
+  clone MyPlugin                    # Clone a single plugin
+  clone --verbose MyPlugin          # Clone with verbose output
+  clone --remove MyPlugin           # Remove a plugin
+  clone --site MySite               # Clone all plugins for a site
+  clone --remove --site MySite      # Remove all plugins for a site
+
+DESCRIPTION:
+  This script manages NopCommerce plugin repositories by cloning them from
+  Azure DevOps and adding them to the solution. It automatically finds the
+  solution file and creates the appropriate directory structure.
+
+  For site operations, the script reads from PluginList.txt files located at:
+  sites/<site-name>/PluginList.txt
+EOF
+}
+
+# Check for help option first
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+  show_help
+  exit 0
+fi
+
+# Enable verbose mode if --verbose or -v is passed
+VERBOSE=false
+if [[ "$1" == "--verbose" || "$1" == "-v" ]]; then
+  VERBOSE=true
+  shift
+fi
+
+# Function to echo messages in verbose mode
+log() {
+  if [ "$VERBOSE" = true ]; then
+    echo "[DEBUG] $1"
+  fi
+}
+
+# Function to process a single repository (clone or remove)
+process_repository() {
+  local operation="$1"
+  local repo_name="$2"
+  local repo_slug="Nop.Plugin.Opensoft.$repo_name"
+  local clone_dir="$PLUGINS_DIR/$repo_slug"
+
+  if [[ "$operation" == "clone" ]]; then
+    echo "--- Cloning $repo_name ---"
+  else
+    echo "--- Removing $repo_name ---"
+  fi
+
+  if [[ "$operation" == "clone" ]]; then
+    if [ -d "$clone_dir" ]; then
+      echo "Repository $repo_slug already exists. Skipping clone."
+      return 0
+    fi
+
+    git clone "$DEVOPS_PROJECT/$repo_slug" "$clone_dir"
+    if [ $? -ne 0 ]; then
+      echo "Error cloning $repo_slug. Skipping."
+      return 1
+    fi
+
+    cd "$clone_dir" || {
+      echo "Error accessing directory $clone_dir. Skipping."
+      return 1
+    }
+
+    git checkout 4.80/develop
+    if [ $? -ne 0 ]; then
+      echo "Error checking out branch for $repo_slug. Skipping."
+      return 1
+    fi
+
+    cd "$SOLUTION_DIR" || return 1
+    if [ -f "Plugins/$repo_slug/$repo_slug.csproj" ]; then
+      # Check if dotnet command is available
+      if ! command -v dotnet &> /dev/null; then
+        echo "dotnet command not found. Adding project to solution manually..."        # Generate a GUID for the project
+        project_guid=$(uuidgen | tr '[:lower:]' '[:upper:]')
+
+        # Check if project already exists in solution
+        if grep -q "Project.*$repo_slug" "$CHOSEN_SOLUTION"; then
+          echo "Project $repo_slug already exists in solution. Skipping."
+          return 0
+        fi
+
+        # Add the project entry as a separate project block after the Plugins folder
+        sed -i "/Project(\"{2150E333-8FDC-42A3-9474-1A3956D46DE8}\") = \"Plugins\"/,/^EndProject$/ {
+          /^EndProject$/ a\\Project(\"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}\") = \"$repo_slug\", \"Plugins\\\\$repo_slug\\\\$repo_slug.csproj\", \"{$project_guid}\"\\nEndProject
+        }" "$CHOSEN_SOLUTION"
+
+        # Add the project to the Plugins folder in NestedProjects section
+        if grep -q "GlobalSection(NestedProjects)" "$CHOSEN_SOLUTION"; then
+          sed -i "/GlobalSection(NestedProjects) = preSolution/a \		{$project_guid} = {07D57EEB-2F50-60C4-C011-FE4FA775C9A8}" "$CHOSEN_SOLUTION"
+        else
+          # Add NestedProjects section if it doesn't exist
+          sed -i "/GlobalSection(SolutionProperties)/i \	GlobalSection(NestedProjects) = preSolution\\n\		{$project_guid} = {07D57EEB-2F50-60C4-C011-FE4FA775C9A8}\\n\	EndGlobalSection" "$CHOSEN_SOLUTION"
+        fi
+
+        echo "Project $repo_slug added to solution manually."
+      else
+        dotnet sln "$CHOSEN_SOLUTION" add --solution-folder Plugins "Plugins/$repo_slug/$repo_slug.csproj"
+        if [ $? -eq 0 ]; then
+          echo "Project $repo_slug added to solution."
+        else
+          echo "Warning: Failed to add $repo_slug to solution."
+        fi
+      fi
+    else
+      echo "Warning: Project file not found for $repo_slug"
+    fi
+  elif [[ "$operation" == "remove" ]]; then
+    if [ -d "$clone_dir" ]; then
+      rm -rf "$clone_dir"
+      echo "Folder '$clone_dir' removed."
+    else
+      echo "Folder '$clone_dir' does not exist."
+    fi
+
+    cd "$SOLUTION_DIR" || return 1
+    if command -v dotnet &> /dev/null; then
+      dotnet sln "$CHOSEN_SOLUTION" remove "Plugins/$repo_slug/$repo_slug.csproj" 2>/dev/null
+      echo "Project $repo_slug removed from solution."
+    else
+      # Manually remove from solution file
+      echo "dotnet command not found. Removing project from solution manually..."
+
+      # First, extract the project GUID from the solution file
+      project_guid=$(grep "Project.*$repo_slug" "$CHOSEN_SOLUTION" | sed -n 's/.*{\([A-F0-9-]*\)}"$/\1/p')
+
+      if [ -n "$project_guid" ]; then
+        echo "Found project GUID: $project_guid"
+
+        # Create temporary file for processing
+        temp_file=$(mktemp)
+
+        # Remove project entry lines (Project declaration and its EndProject)
+        awk "
+        /Project.*$repo_slug/ { skip=1; next }
+        skip && /^[[:space:]]*EndProject/ { skip=0; next }
+        !skip { print }
+        " "$CHOSEN_SOLUTION" > "$temp_file"
+
+        # Remove NestedProjects entry for this project
+        sed -i "/{$project_guid}/d" "$temp_file"
+
+        # Remove ProjectConfigurationPlatforms entries for this project
+        sed -i "/{$project_guid}\./d" "$temp_file"
+
+        mv "$temp_file" "$CHOSEN_SOLUTION"
+        echo "Project $repo_slug removed from solution manually."
+      else
+        echo "Warning: Could not find project $repo_slug in solution file."
+      fi
+    fi
+  fi
+
+  if [[ "$operation" == "clone" ]]; then
+    echo "--- Finished cloning $repo_name ---"
+  else
+    echo "--- Finished removing $repo_name ---"
+  fi
+  return 0
+}
+
+log "Starting clone script"
+
+# Initialize variables
+VERBOSE=false
+REMOVE=false
+SITE_MODE=false
+REPO_NAME=""
+SITE_NAME=""
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --verbose|-v)
+      VERBOSE=true
+      shift
+      ;;
+    --remove|-rm)
+      REMOVE=true
+      shift
+      ;;
+    --site|-s)
+      SITE_MODE=true
+      shift
+      ;;
+    -*)
+      # Handle combined flags like -s or check for invalid flags
+      if [[ "$1" == "-r" ]]; then
+        echo "Error: Invalid option '-r'. Did you mean 'clone -rm <repo-name>'?"
+        exit 1
+      else
+        echo "Error: Unknown option '$1'"
+        echo "Usage: clone [--verbose | -v] [--remove | -rm] [--site | -s] <repo-name-or-site-name>"
+        exit 1
+      fi
+      ;;
+    *)
+      # This should be the repository name or site name
+      if [[ $SITE_MODE == true ]]; then
+        SITE_NAME="$1"
+      else
+        REPO_NAME="$1"
+      fi
+      shift
+      ;;
+  esac
+done
+
+# Validate arguments
+if [[ $SITE_MODE == true ]]; then
+  if [[ -z "$SITE_NAME" ]]; then
+    echo "Error: The --site or -s option must be followed by a site name."
+    echo "Usage: clone [--verbose | -v] [--remove | -rm] --site <site-name>"
+    exit 1
+  fi
+else
+  if [[ -z "$REPO_NAME" ]]; then
+    echo "Usage: clone [--verbose | -v] [--remove | -rm] [--site | -s] <repo-name-or-site-name>"
+    exit 1
+  fi
+fi
+REPO_SLUG="Nop.Plugin.Opensoft.$REPO_NAME"
+DEVOPS_PROJECT="FarHeapSolutions@vs-ssh.visualstudio.com:v3/FarHeapSolutions/Nop%20Plugins"
+
+# Get current directory
+CURRENT_DIR=$(pwd)
+log "Current directory: $CURRENT_DIR"
+
+# Search for solution files
+SOLUTION_COUNT=0
+declare -a SOLUTION_LIST
+CHOSEN_SOLUTION=""
+
+# Function to search down directories
+search_down() {
+  local search_path="$1"
+  local depth="$2"
+
+  if [ "$depth" -ge 3 ]; then
+    return
+  fi
+
+  log "Searching down in: $search_path (depth $depth)"
+
+  # Check for .sln files in current directory
+  for sln_file in "$search_path"/*.sln; do
+    if [ -f "$sln_file" ]; then
+      # Normalize the path to remove double slashes
+      normalized_path=$(realpath "$sln_file" 2>/dev/null || echo "$sln_file")
+      SOLUTION_LIST+=("$normalized_path")
+      ((SOLUTION_COUNT++))
+      log "Found solution: $normalized_path"
+    fi
+  done
+
+  # Search subdirectories
+  local next_depth=$((depth + 1))
+  for dir in "$search_path"/*/; do
+    if [ -d "$dir" ]; then
+      search_down "$dir" "$next_depth"
+    fi
+  done
+}
+
+# Search up the directory tree
+SEARCH_DIR="$CURRENT_DIR"
+while true; do
+  log "Searching up in: $SEARCH_DIR"
+
+  # Check for .sln files in current search directory
+  for sln_file in "$SEARCH_DIR"/*.sln; do
+    if [ -f "$sln_file" ]; then
+      # Normalize the path to remove double slashes
+      normalized_path=$(realpath "$sln_file" 2>/dev/null || echo "$sln_file")
+      SOLUTION_LIST+=("$normalized_path")
+      ((SOLUTION_COUNT++))
+      log "Found solution: $normalized_path"
+    fi
+  done
+
+  # Check if we've reached nopSetup or workspace folder
+  DIR_NAME=$(basename "$SEARCH_DIR")
+  if [[ "${DIR_NAME,,}" == "nopsetup" || "${DIR_NAME,,}" == "workspace" ]]; then
+    log "Reached stop directory: $DIR_NAME"
+    break
+  fi
+
+  # Move up one directory
+  PARENT_DIR=$(dirname "$SEARCH_DIR")
+  if [ "$SEARCH_DIR" == "$PARENT_DIR" ] || [ "$PARENT_DIR" == "/" ]; then
+    log "Reached filesystem root"
+    break
+  fi
+  SEARCH_DIR="$PARENT_DIR"
+done
+
+# If no solutions found going up, search down 3 levels
+if [ "$SOLUTION_COUNT" -eq 0 ]; then
+  log "No solutions found going up, searching down 3 levels"
+  search_down "$CURRENT_DIR" 0
+fi
+
+# Handle solution selection
+if [ "$SOLUTION_COUNT" -eq 0 ]; then
+  echo "No solution file found"
+  exit 1
+elif [ "$SOLUTION_COUNT" -eq 1 ]; then
+  CHOSEN_SOLUTION="${SOLUTION_LIST[0]}"
+  log "Using single solution: $CHOSEN_SOLUTION"
+else
+  echo "Multiple solution files found:"
+  for i in "${!SOLUTION_LIST[@]}"; do
+    echo "$((i+1)). ${SOLUTION_LIST[$i]}"
+  done
+  read -p "Please choose a solution file (1-$SOLUTION_COUNT): " CHOICE
+  if [[ "$CHOICE" =~ ^[0-9]+$ ]] && [ "$CHOICE" -ge 1 ] && [ "$CHOICE" -le "$SOLUTION_COUNT" ]; then
+    CHOSEN_SOLUTION="${SOLUTION_LIST[$((CHOICE-1))]}"
+  else
+    echo "Invalid selection"
+    exit 1
+  fi
+fi
+
+# Get solution directory
+
+# Copy solution template if it exists and target does not
+if [ -f "$SOLUTION_DIR/src/NopCommerce.sln.template" ] && [ ! -f "$SOLUTION_DIR/src/NopCommerce.sln" ]; then
+  echo "Creating solution file from template..."
+  cp "$SOLUTION_DIR/src/NopCommerce.sln.template" "$SOLUTION_DIR/src/NopCommerce.sln"
+fi
+
+SOLUTION_DIR=$(dirname "$CHOSEN_SOLUTION")
+log "Solution directory: $SOLUTION_DIR"
+
+# Copy solution template if it exists and target does not
+if [ -f "$SOLUTION_DIR/src/NopCommerce.sln.template" ] && [ ! -f "$SOLUTION_DIR/src/NopCommerce.sln" ]; then
+  echo "Creating solution file from template..."
+  cp "$SOLUTION_DIR/src/NopCommerce.sln.template" "$SOLUTION_DIR/src/NopCommerce.sln"
+fi
+
+
+# Validate solution file for Plugins folder declaration
+log "Validating solution file for Plugins folder"
+if ! grep -q 'Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins"' "$CHOSEN_SOLUTION"; then
+  echo "Error: No plugins solution folder declaration in solution file"
+  exit 1
+fi
+
+log "Plugins folder declaration found with correct GUID"
+
+# Check if Plugins folder exists
+if [ ! -d "$SOLUTION_DIR/Plugins" ]; then
+  echo "Error: Plugins folder not where expected"
+  exit 1
+fi
+
+PLUGINS_DIR="$SOLUTION_DIR/Plugins"
+CLONE_DIR="$PLUGINS_DIR/$REPO_SLUG"
+log "Plugins directory: $PLUGINS_DIR"
+log "Clone directory: $CLONE_DIR"
+
+# Handle operations based on parsed arguments
+if [[ $SITE_MODE == true ]]; then
+  # Look for PluginList.txt in the sites folder at the workspace root
+  WORKSPACE_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+  PLUGIN_LIST_FILE="$WORKSPACE_ROOT/sites/$SITE_NAME/PluginList.txt"
+
+  if [ ! -f "$PLUGIN_LIST_FILE" ]; then
+    echo "Error: PluginList.txt file not found at '$PLUGIN_LIST_FILE'."
+    exit 1
+  fi
+
+  if [[ $REMOVE == true ]]; then
+    echo "Removing repositories for site '$SITE_NAME' listed in $PLUGIN_LIST_FILE..."
+    OPERATION_NAME="remove"
+  else
+    echo "Cloning repositories for site '$SITE_NAME' listed in $PLUGIN_LIST_FILE..."
+    OPERATION_NAME="clone"
+  fi
+
+  # Count total repositories for progress tracking
+  TOTAL_REPOS=$(grep -v '^#\|^$' "$PLUGIN_LIST_FILE" | wc -l)
+  CURRENT_REPO=0
+
+  while IFS= read -r REPO_NAME_FROM_FILE || [ -n "$REPO_NAME_FROM_FILE" ]; do
+    if [[ -z "$REPO_NAME_FROM_FILE" || "$REPO_NAME_FROM_FILE" == \#* ]]; then
+      continue
+    fi
+
+    CURRENT_REPO=$((CURRENT_REPO + 1))
+    echo "[$CURRENT_REPO/$TOTAL_REPOS] Processing repository: $REPO_NAME_FROM_FILE"
+
+    process_repository "$OPERATION_NAME" "$REPO_NAME_FROM_FILE"
+
+  done < "$PLUGIN_LIST_FILE"
+
+  if [[ $REMOVE == true ]]; then
+    echo "All repositories for site '$SITE_NAME' have been removed."
+  else
+    echo "All repositories for site '$SITE_NAME' processed."
+  fi
+  exit 0
+fi
+
+# Handle single repository operations
+if [[ $REMOVE == true ]]; then
+  echo "Removing repository '$REPO_SLUG'..."
+  process_repository "remove" "$REPO_NAME"
+  cd "$CURRENT_DIR"
+  echo "Repository '$REPO_SLUG' removed successfully."
+  exit 0
+fi
+
+# Clone the repository
+echo "Cloning repository '$REPO_SLUG'..."
+process_repository "clone" "$REPO_NAME"
+
+cd "$CURRENT_DIR"
+echo "Script completed successfully."

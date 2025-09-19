@@ -1,0 +1,53 @@
+name: container-apps-ai-mcp
+services:
+  mcp-host:
+    build:
+      context: ./mcp-host
+    environment:
+      - MCP_SERVER_HTTP_URL=http://mcp-server-http:3000/mcp
+      # Comment the line below to disable debug logging
+      - DEBUG=mcp:*
+    env_file:
+      - ./mcp-host/.env
+    depends_on:
+      - mcp-server-http
+      - mcp-server-sse
+  mcp-server-http:
+    build:
+      context: ./mcp-server-http
+    ports:
+      - '3000:3000'
+    environment:
+      # override the hostname provided in the .env file
+      - DB_HOST=host.docker.internal
+    env_file:
+      - ./mcp-server-http/.env
+    depends_on:
+      - documentdb
+
+  mcp-server-sse:
+    build:
+      context: ./mcp-server-sse
+    ports:
+      - '3001:3000'
+    environment:
+      # override the hostname provided in the .env file
+      - DB_HOST=host.docker.internal
+    env_file:
+      - ./mcp-server-sse/.env
+    depends_on:
+      - documentdb
+
+  documentdb:
+    image: ghcr.io/microsoft/documentdb/documentdb-local:latest
+    ports:
+      - "10260:10260"
+    environment:
+      - USERNAME=admin
+      - PASSWORD=123
+    volumes:
+      - dbdata:/var/lib/documentdb/data
+    restart: unless-stopped
+
+volumes:
+  dbdata:

@@ -1,0 +1,19 @@
+services:
+  dev:
+    container_name: dev-container
+    hostname: dev # The hostname is the name of the tunnel (by default)
+    image: ghcr.io/thaddeuskkr/dev-container:main # For linux/amd64 builds
+    # image: ghcr.io/thaddeuskkr/dev-container:arm64 # For linux/arm64 builds
+    restart: unless-stopped
+    environment:
+      PASSWORD: YOUR_PASSWORD # This is set for the users "ubuntu" and "root"
+    volumes:
+      - ~/.gnupg:/volumes/.gnupg:ro
+      - ~/.gitconfig:/volumes/.gitconfig:ro
+      - ./workspaces:/workspaces
+      - ./data/:/data
+      # - /var/run/docker.sock:/var/run/docker.sock # Optional - if you want to use Docker within the container
+      - home:/home/ubuntu
+
+volumes:
+  home:

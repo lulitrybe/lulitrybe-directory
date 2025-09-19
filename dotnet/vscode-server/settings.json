@@ -1,0 +1,31 @@
+{
+    "git.ignoreLimitWarning": true
+}
+
+/media/home/officialmofabs/remotedrive/homebase/daytona
+/media/officialmofabs/btrfs/project
+/media/officialmofabs/btrfs/project/docs.git
+/media/officialmofabs/btrfs/project/.config
+/media/officialmofabs/btrfs/project/.gitconfig
+/media/officialmofabs/btrfs/project/.gitignore
+/media/officialmofabs/btrfs/project/.gitmessage
+/media/officialmofabs/btrfs/project/.env
+/mnt/sda5/homebase
+/media/home/officialmofabs/remotedrive/homebase/_garage
+/media/home/officialmofabs/remotedrive/homebase/gitserver.git
+/mnt/sda5/homebase-dev
+/mnt/sda5/usr
+/mnt/sda5
+
+
+
+from daytona_sdk import Daytona, DaytonaConfig, CreateSandboxParams
+
+daytona = Daytona(DaytonaConfig(api_key="YOUR_API_KEY"))
+sandbox = daytona.create(CreateSandboxParams(language="python"))
+
+response = sandbox.process.code_run('print("Hello from Daytona!")')
+print(response.result)
+
+daytona.remove(sandbox)
+

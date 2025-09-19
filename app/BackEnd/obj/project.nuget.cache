@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "f0p8OjG2ILY=",
+  "success": true,
+  "projectFilePath": "/workspaces/dotnet-codespaces/app/BackEnd/BackEnd.csproj",
+  "expectedPackageFiles": [
+    "/root/.nuget/packages/microsoft.aspnetcore.openapi/9.0.8/microsoft.aspnetcore.openapi.9.0.8.nupkg.sha512",
+    "/root/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512",
+    "/root/.nuget/packages/scalar.aspnetcore/2.0.36/scalar.aspnetcore.2.0.36.nupkg.sha512"
+  ],
+  "logs": []
+}

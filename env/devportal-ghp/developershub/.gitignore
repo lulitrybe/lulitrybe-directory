@@ -1,0 +1,17 @@
+nopCommerce/*
+!nopCommerce/.vscode/
+!nopCommerce/.vscode/**/*
+!nopCommerce/.devcontainer/
+!nopCommerce/.devcontainer/**/*
+nopPlugins/*
+!nopPlugins/.vscode/
+!nopPlugins/.vscode/**/*
+!nopPlugins/.devcontainer/
+!nopPlugins/.devcontainer/**/*
+!nopPlugins/src/NopCommerce.sln
+nopSolution/*
+!nopSolution/.vscode/
+!nopSolution/.vscode/**/*
+!nopSolution/.devcontainer/
+!nopSolution/.devcontainer/**/*
+nopPlugins/src/nopCommerce.sln

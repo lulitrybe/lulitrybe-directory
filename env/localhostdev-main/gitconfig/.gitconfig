@@ -1,0 +1,317 @@
+[user]
+     name = project operations
+    email = support@igedevteam.onmicrosoft.com
+
+[core]
+    editor = \"C:\\Program Files\\Microsoft VS Code\\Code.exe\" \"-n\"
+    whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol,space-before-tab
+    tabwidth=4
+    excludesfile = ~/.gitignore-global
+    symlinks = false
+    autocrlf = true
+
+[gui]
+    stageuntracked = no
+    fontdiff = -family Consolas -size 10 -weight normal -slant roman -underline 0 -overstrike 0
+    tabsize = 4
+
+[push]
+    #default = matching
+    default = simple
+
+[log]
+    decorate = full
+    date = local
+
+[pack]
+    # 1 Thread / CPU
+    threads = 0
+    packSizeLimit = 2g
+
+[diff]
+    tool = bc4
+#    renames=copy
+
+[merge]
+    tool = bc4
+
+[difftool]
+    prompt = false
+
+[mergetool]
+    prompt = false
+
+[difftool "bc4"]
+    cmd =  "C:/program\\ files/beyond\\ compare\\ 4/bcomp.exe $LOCAL $REMOTE"
+    path = c:/Program Files (x86)/Beyond Compare 4/bcomp.exe
+
+[mergetool "bc4"]
+    cmd = "C:/Program\\ Files/Beyond\\ Compare\\ 4/Bcomp.exe $LOCAL $REMOTE $BASE $MERGED"
+    trustExitCode = true
+    keepBackup = false
+    prompt = false
+
+[difftool "vsdiffmerge"]
+    cmd = \"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\vsdiffmerge.exe\" \"$LOCAL\" \"$REMOTE\" //t
+
+[difftool "vsdiffmerge"]
+    keepbackup = false
+
+[web]
+    browser = google-chrome
+
+[url "https://github.com/"]
+    insteadOf = gh:
+
+[url "https://gist.github.com/"]
+    insteadOf = gist:
+
+[filter "lfs"]
+    clean = git-lfs clean %f
+    smudge = git-lfs smudge %f
+    required = true
+
+[color]
+    ui = true
+
+[color "branch"]
+    current = magenta bold
+    local = green bold
+    remote = cyan bold
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+
+[color "status"]
+    added = green bold
+    changed = yellow bold
+    untracked = white
+
+[alias]
+    a = add --all
+    ai = add -i
+    #############
+    ap = apply
+    as = apply --stat
+    ac = apply --check
+    #############
+    amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
+    #############
+    ama = am --abort
+    amr = am --resolved
+    ams = am --skip
+    #############
+    b = branch
+    ba = branch -a
+    bd = branch -d
+    bdd = branch -D
+    br = branch -r
+    bc = rev-parse --abbrev-ref HEAD
+    bu = !git rev-parse --abbrev-ref --symbolic-full-name "@{u}"
+    #############
+    c = commit
+    ca = commit -a
+    cm = commit -m
+    cam = commit -am
+    cem = commit --allow-empty -m
+    cd = commit --amend
+    cad = commit -a --amend
+    ced = commit --allow-empty --amend
+    cp = commit -M "Commit to save progress so far"
+    #############
+    cl = clone
+    cld = clone --depth 1
+    clg = !sh -c 'git clone git://github.com/$1 $(basename $1)' -
+    clgp = !sh -c 'git clone git@github.com:$(git config --get user.username)/$1 $1' -
+    #############
+    cp = cherry-pick
+    cpa = cherry-pick --abort
+    cpc = cherry-pick --continue
+    #############
+    d = diff
+    dp = diff --patience
+    dc = diff --cached
+    dl = difftool
+    dlc = difftool --cached
+    dk = diff --check
+    dp = diff --patience
+    dck = diff --cached --check
+    dag = log --graph --pretty=format:'%C(red)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    daga = log --graph --pretty=format:'%C(red)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --branches
+    dets = log -n1 -p --format=fuller
+    dt = difftool
+    dct = difftool --cached
+    #############
+    f = fetch
+    fo = fetch origin
+    fu = fetch upstream
+    #############
+    fp = format-patch
+    #############
+    fk = fsck
+    #############
+    g = grep -p
+    #############
+    l = log --oneline
+    lg = log --oneline --graph --decorate
+    lgp = !git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lol = log --oneline --graph --decorate
+    lod = log --pretty=format:'%C(yellow bold)%h %C(cyan bold)%ad %C(green bold)%an %C(red bold)%D  %C(white)%s' --graph --abbrev-commit
+    logln = log --pretty=format:'%h%x09%ad%x09%s'
+    lg2 = log --color --graph --pretty=format:'%Cred%hCreset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    #############
+    ls = ls-files
+    lsf = "!git ls-files | grep -i"
+    #############
+    m = merge
+    ma = merge --abort
+    mc = merge --continue
+    ms = merge --skip
+    #############
+    o = checkout
+    ob = checkout -b
+    #############
+    pr = prune -v
+    #############
+    ps = push
+    psf = push -f
+    psu = push -u
+    pst = push --tags
+    #############
+    pso = push origin
+    psao = push --all origin
+    psfo = push -f origin
+    psuo = push -u origin
+    #############
+    psom = push origin master
+    psaom = push --all origin master
+    psfom = push -f origin master
+    psuom = push -u origin master
+    psoc = !git push origin $(git bc)
+    psaoc = !git push --all origin $(git bc)
+    psfoc = !git push -f origin $(git bc)
+    psuoc = !git push -u origin $(git bc)
+    psdc = !git push origin :$(git bc)
+    pt = push --tags
+    #############
+    pb = pull --rebase
+    pbo = pull --rebase origin
+    pl = pull
+    plu = pull -u
+    plo = pull origin
+    plp = pull upstream
+    plom = pull origin master
+    ploc = !git pull origin $(git bc)
+    pbom = pull --rebase origin master
+    pboc = !git pull --rebase origin $(git bc)
+    plpm = pull upstream master
+    #############
+    pb = pull --rebase
+    pbo = pull --rebase origin
+    pbp = pull --rebase upstream
+    pbom = pull --rebase origin master
+    pbpm = pull --rebase upstream master
+    plum = pull upstream master
+    pluc = !git pull upstream $(git bc)
+    pbum = pull --rebase upstream master
+    pbuc = !git pull --rebase upstream $(git bc)
+    #############
+    rb = rebase
+    rba = rebase --abort
+    rbc = rebase --continue
+    rbi = rebase --interactive
+    rbs = rebase --skip
+    #############
+    re = reset
+    rh = reset HEAD
+    reh = reset --hard
+    rem = reset --mixed
+    res = reset --soft
+    rehh = reset --hard HEAD
+    remh = reset --mixed HEAD
+    resh = reset --soft HEAD
+    #############
+    r = remote
+    ra = remote add
+    rr = remote rm
+    rv = remote -v
+    rm = remote rename
+    rp = remote prune
+    rs = remote show
+    rao = remote add origin
+    rau = remote add upstream
+    rro = remote remove origin
+    rru = remote remove upstream
+    rso = remote show origin
+    rsu = remote show upstream
+    rpo = remote prune origin
+    rpu = remote prune upstream
+    #############
+    rmf = rm -f
+    rmrf = rm -r -f
+    #############
+    s = status
+    sb = status -s -b
+    #############
+    sa = stash apply
+    sc = stash clear
+    sd = stash drop
+    sl = stash list
+    sp = stash pop
+    ss = stash save
+    sw = stash show
+    st = !git stash list | wc -l 2>/dev/null | grep -oEi '[0-9][0-9]*'
+    #############
+    t = tag
+    td = tag -d
+    #############
+    w = show
+    wp = show -p
+    wr = show -p --no-color
+    #############
+    svnr = svn rebase
+    svnd = svn dcommit
+    svnl = svn log --oneline --show-commit
+    #############
+    subadd = !sh -c 'git submodule add git://github.com/$1 $2/$(basename $1)' -
+    subup = submodule update --init --recursive
+    subpull = !git submodule foreach git pull --tags origin master
+    #############
+    assume = update-index --assume-unchanged
+    unassume = update-index --no-assume-unchanged
+    assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+    unassumeall = !git assumed | xargs git update-index --no-assume-unchanged
+    assumeall = "!git st -s | awk {'print $2'} | xargs git assume"
+    #############
+    bump = !sh -c 'git commit -am \"Version bump v$1\" && git psuoc && git release $1' -
+    release = !sh -c 'git tag v$1 && git pst' -
+    unrelease = !sh -c 'git tag -d v$1 && git pso :v$1' -
+    aliases = !git config -l | grep alias | cut -c 7-
+    snap = !git stash save 'snapshot: $(date)' && git stash apply 'stash@{0}'
+    bare = !sh -c 'git symbolic-ref HEAD refs/heads/$1 && git rm --cached -r . && git clean -xfd' -
+    whois = !sh -c 'git log -i -1 --author=\"$1\" --pretty=\"format:%an <%ae>\"' -
+    serve = daemon --reuseaddr --verbose --base-path=. --export-all ./.git
+    #############
+    behind = !git rev-list --left-only --count $(git bu)...HEAD
+    ahead = !git rev-list --right-only --count $(git bu)...HEAD
+    #############
+    ours = "!f() { git checkout --ours $@ && git add $@; }; f"
+    theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+    #############
+    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+    #############
+    barebranch = !sh -c 'git symbolic-ref HEAD refs/heads/$1 && git rm --cached -r . && git clean -xfd' -
+    flat = clone --depth 1
+    subpull = !git submodule foreach git pull --tags origin master
+    subrepo = !sh -c 'filter-branch --prune-empty --subdirectory-filter $1 master' -
+    human = name-rev --name-only --refs=refs/heads/*
+    serve = !git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+    snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+
+[http]
+    sslCAInfo = C:\\Program Files\\Git\\usr\\ssl\\certs\\ca-bundle.crt

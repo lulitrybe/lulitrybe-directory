@@ -1,0 +1,1 @@
+{"pluginName":"jetbrains","installationId":"69feb4a4-ed29-4d49-8a7b-9b8e5fe9580a","pluginVersion":"1.0.24","ideVersion":"IntelliJ IDEA 2024.3.1.1 / IC-243.22562.218","operatingSystem":"Linux 6.12.10-arch1-1","checkovVersion":"3.2.357","eventType":"onPluginInstall","eventTime":"2025-01-25 23:21:29.331+0000","eventData":{}}

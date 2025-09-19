@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "path": "cccerithparish.org
+    },
+    {
+      "path": "docs"
+    }
+  ],
+  "settings": {
+    "editor.fontSize": 14
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "esbenp.prettier-vscode"
+    ]
+  }
+}

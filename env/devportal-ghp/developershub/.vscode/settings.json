@@ -1,0 +1,129 @@
+{
+    // --------------------------------------------------------------------------
+    // General Editor Settings
+    // --------------------------------------------------------------------------
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.renderWhitespace": "boundary",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.eol": "\n", // Use LF line endings, common in Git
+
+    // --------------------------------------------------------------------------
+    // File and Search Exclusions (Tailored for NopCommerce)
+    // --------------------------------------------------------------------------
+    "files.exclude": {
+      "**/.git": true,
+      "**/.vs": true,
+      "**/.vscode": false, // Keep .vscode folder visible
+      "**/bin": true, // Exclude bin folders
+      "**/obj": true, // Exclude obj folders
+      "**/node_modules": true,
+      "**/wwwroot/bundles": true, // Exclude generated bundles
+      "**/wwwroot/db": true, // Exclude generated EF diagrams
+      "**/App_Data": false, // Often need to access App_Data
+      "**/App_Data/DataProtectionKeys": true, // Hide keys
+      "**/App_Data/plugins.json": false, // Keep plugins.json visible
+      "**/App_Data/dataSettings.json": false, // Keep dataSettings.json visible
+      "**/logs": true, // Exclude logs folder
+      "*.user": true,
+      "*.suo": true,
+      "*.bak": true,
+      "*.tmp": true,
+      "*.log": true,
+      "*.lock.json": true, // e.g., project.assets.lock.json
+      "*.csproj.user": true,
+      "Plugins/**/bin": true, // Exclude plugin bin folders
+      "Plugins/**/obj": true, // Exclude plugin obj folders
+      "Themes/**/bin": true, // Exclude theme bin folders
+      "Themes/**/obj": true // Exclude theme obj folders
+    },
+    "search.exclude": {
+      "**/bin": true,
+      "**/obj": true,
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/logs": true,
+      "**/App_Data/DataProtectionKeys": true,
+      "**/wwwroot/bundles": true,
+      "**/wwwroot/db": true,
+      "*.lock.json": true,
+      "package-lock.json": true,
+      "yarn.lock": true
+    },
+    "files.watcherExclude": {
+      "**/.git/objects/**": true,
+      "**/.git/subtree-cache/**": true,
+      "**/node_modules/*/**": true,
+      "**/bin/**": true,
+      "**/obj/**": true,
+      "**/logs/**": true
+    },
+
+    // --------------------------------------------------------------------------
+    // C# / .NET Specific Settings (Requires C# Dev Kit or C# extension)
+    // --------------------------------------------------------------------------
+    // Point to the solution file (Adjust path if your .sln is not at the root)
+    "dotnet.defaultSolution": "NopCommerce.sln",
+
+    // Omnisharp / C# Dev Kit settings (Examples, adjust based on extension used)
+    "dotnet.format.enabled": true,
+    "csharp.format.enable": true,
+    "omnisharp.enableRoslynAnalyzers": true,
+    "omnisharp.enableEditorConfigSupport": true,
+    "omnisharp.useModernNet": true, // Recommended for .NET 6+
+
+    // Suppress specific warnings if needed (Example)
+    // "omnisharp.loggingLevel": "warn",
+    // "csharp.supressBuildAssetsNotification": true,
+
+    // --------------------------------------------------------------------------
+    // Language Specific Formatting & Settings
+    // --------------------------------------------------------------------------
+    "[csharp]": {
+      // Assumes C# Dev Kit or C# extension (ms-dotnettools.csharp)
+      "editor.defaultFormatter": "ms-dotnettools.csharp",
+      "editor.codeActionsOnSave": {
+        "source.fixAll.csharp": "explicit" // Or "implicit" / true
+      }
+    },
+    "[razor]": {
+      // Assumes C# Dev Kit or C# extension
+      "editor.defaultFormatter": "ms-dotnettools.csharp"
+      // Note: Formatting Razor can sometimes be tricky depending on extensions
+    },
+    "[html]": {
+      "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[css]": {
+      "editor.defaultFormatter": "vscode.css-language-features"
+    },
+    "[scss]": {
+      // Requires a SCSS formatter extension like "sibiraj-s.vscode-scss-formatter"
+      // "editor.defaultFormatter": "sibiraj-s.vscode-scss-formatter"
+      "editor.defaultFormatter": "vscode.css-language-features" // Fallback
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[json]": {
+      "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[jsonc]": { // For JSON with comments like this settings file
+      "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[xml]": {
+      // Requires an XML formatter extension like "redhat.vscode-xml"
+      "editor.defaultFormatter": "vscode.configuration-editing"
+    },
+
+    // --------------------------------------------------------------------------
+    // Other Useful Settings
+    // --------------------------------------------------------------------------
+    "workbench.editor.limit.enabled": true, // Enable tab limit
+    "workbench.editor.limit.value": 15, // Adjust max open tabs
+    "explorer.compactFolders": false, // Show full folder structure
+    "breadcrumbs.enabled": true, // Show breadcrumbs for navigation
+    "git.autofetch": true // Automatically fetch from remote
+  }

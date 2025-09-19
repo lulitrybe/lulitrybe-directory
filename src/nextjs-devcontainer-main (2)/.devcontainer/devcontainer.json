@@ -1,0 +1,17 @@
+{
+  "name": "Docker NextJS",
+  "dockerComposeFile": "../compose.yml",
+  "service": "app",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-ceintl.vscode-language-pack-ja",
+        "dsznajder.es7-react-js-snippets",
+        "foxundermoon.next-js",
+        "pulkitgangwar.nextjs-snippets"
+      ]
+    }
+  },
+  "postCreateCommand": "apt-get update && apt-get install -y git"
+}

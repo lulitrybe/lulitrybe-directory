@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "/mnt/sda3/cccerith-directory"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true,
+		"editor.linkedEditing": true
+	}
+}

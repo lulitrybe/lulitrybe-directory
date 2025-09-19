@@ -1,0 +1,8 @@
+.tox/
+tests/.bin/
+tests/__pycache__
+qemu_composer.egg-info/
+qemu_composer/*.pyc
+.coveralls.yml
+.coverage
+htmlcov/
