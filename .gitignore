@@ -88,3 +88,5 @@ modules/*
 
 
 
+/node_modules
+modules
