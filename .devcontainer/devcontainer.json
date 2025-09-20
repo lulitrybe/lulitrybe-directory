@@ -83,7 +83,8 @@
                 "adamwojcikit.pnp-powershell-extension",
                 "doppler.doppler-vscode",
                 "tailscale.vscode-tailscale",
-                "msoffice.microsoft-office-add-in-debugger"
+                "msoffice.microsoft-office-add-in-debugger",
+                "ms-vscode.makefile-tools"
             ]
         }
     },
