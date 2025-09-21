@@ -1,4 +1,0 @@
-{
-    "dotnet.defaultSolution": "cccerithparishApp/App.sln",
-    "containers.containerClient": "com.microsoft.visualstudio.containers.docker"
-}

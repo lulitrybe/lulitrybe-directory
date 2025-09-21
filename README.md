@@ -1,7 +1,7 @@
-Directory Structure 2.0.1 ( DIRS 2 )
+Lulitrybe Directory
 -------------------
 
-This folder contains the ideal directory structure for each kind of system, app or project.
+This folder contains the resources and structure for all system, services,app or project deployed in this phase of the project 
 It has been freely inspired by Filesystem Hierarchy Standard (FHS) and various other projects.
 It can be used for all kind of projects and languages (PHP, Java, C++, Nodejs etc.) but even for Operating Systems.
 Of course, depending on the purposes, some directories can be avoided/changed
@@ -9,27 +9,14 @@ Of course, depending on the purposes, some directories can be avoided/changed
 
 Feel free to use our issue tracker to send suggestions and opinions.
 
-## Differences with version 1.x
-
-First version of this standard was limited to offer directories where store files and components for each kind of needed situations.
-
-Version 2 instead adds multiple specifications to improve modular software design. Introducing concepts such as:
-
- * Awareness level
- * Files allocation type
- * Directory sub-structure
- * Context layers (scope)
-
-[Read how to upgrade from 1.x](data/docs/2x/upgrade1x.md)
-
 ## Architecture
 
 <a href="https://docs.google.com/drawings/d/e/2PACX-1vTg_4zJzH_ZyHcFA2ovy70qRd3c3dw4gPptKFlgsTAvENWfX19YY8g-Rko57HJsWYvUPXR-NOr9csuB/pub?w=1932&h=1080">
     <img src="https://docs.google.com/drawings/d/e/2PACX-1vTg_4zJzH_ZyHcFA2ovy70qRd3c3dw4gPptKFlgsTAvENWfX19YY8g-Rko57HJsWYvUPXR-NOr9csuB/pub?w=1932&amp;h=1080">
 </a>
 
- - Awareness level: it defines which components can access to others. 
-   Components with equal or higher level (top) can access to components with equal or lower level (bottom).
+ - Awareness level: it defines which components can access the others. 
+   Components with equal or higher level (top) can access components with equal or lower level (bottom).
    Not following this rules can probably cause a bad and no modular software architecture.
 
  - Allocation: there are 3 kinds of directory/file allocation

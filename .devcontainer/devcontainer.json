@@ -1,5 +1,5 @@
 {
-    "name": "cccerith-directory",
+    "name": "lulitrybe-directory",
     "image": "mcr.microsoft.com/dotnet/sdk:9.0",
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:2": {},
@@ -84,7 +84,10 @@
                 "doppler.doppler-vscode",
                 "tailscale.vscode-tailscale",
                 "msoffice.microsoft-office-add-in-debugger",
-                "ms-vscode.makefile-tools"
+                "ms-vscode.makefile-tools",
+                "maciejdems.add-to-gitignore",
+                "McCarter.start-git-bash",
+                "samschneller.git-add-remote"
             ]
         }
     },

@@ -1,7 +1,0 @@
-{
-  "name": "Universal Dev Container (Simple Test)",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
-  "remoteUser": "developer"
-}
